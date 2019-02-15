@@ -4,7 +4,12 @@ ObjectId = Schema.ObjectId;
 
 var blogSchema = new Schema({
   'author': ObjectId,
-  'content': String
+  'title': String,
+  'content': String,
+  'createdDate': {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model('blog', blogSchema);

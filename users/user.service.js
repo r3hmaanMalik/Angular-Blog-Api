@@ -56,12 +56,14 @@ async function getById(id) {
 async function createBlog(userParam) {
   const blog = new Blog(userParam);
   // save user
-  await blog.save();
+  return await blog.save();
 }
 
 async function getAllBlogs(userParam) {
   return await Blog.find({
     author: userParam._id
+  }).sort({
+    createdDate: -1
   });
 
 }
@@ -104,10 +106,18 @@ async function update(id, userParam) {
   if (userParam.password) {
     userParam.hash = bcrypt.hashSync(userParam.password, 10);
   }
+  if (userParam.friends) {
+    console.log(userParam.friends[0].id);
+    console.log(user.friends.push({
+      "id": userParam.friends[0].id
+    }));
+
+  }
 
   // copy userParam properties to user
-  Object.assign(user, userParam);
 
+  // Object.assign(user, userParam);
+  //
   await user.save();
 }
 
